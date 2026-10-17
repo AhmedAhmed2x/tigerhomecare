@@ -1,70 +1,140 @@
 
 /* ==========================================================
-   TIGER HOME HEALTH CARE — JAVASCRIPT
-   Mobile menu, navigation accessibility, and copyright year.
+   TIGER HOME HEALTH CARE, LLC
+   Website interactions — no external JavaScript libraries
    ========================================================== */
 
 (() => {
-  // Find the website elements we need to control.
-  const header = document.querySelector(".site-header");
-  const menuButton = document.querySelector(".menu-toggle");
-  const nav = document.querySelector("#primary-nav");
-  const year = document.querySelector("#current-year");
+  "use strict";
 
-  // Automatically show the current year in the footer.
-  if (year) {
-    year.textContent = new Date().getFullYear();
+  // Find the elements needed for the interactive features.
+  const menuToggle = document.querySelector(".menu-toggle");
+  const mobileMenu = document.querySelector("#mobile-menu");
+  const desktopLinks = document.querySelectorAll(
+    ".desktop-nav .nav-link"
+  );
+  const yearNode = document.querySelector("#current-year");
+
+  // Update the copyright year automatically.
+  if (yearNode) {
+    yearNode.textContent = String(new Date().getFullYear());
   }
 
-  // Open and close the navigation menu on smaller screens.
-  if (menuButton && nav) {
-    menuButton.addEventListener("click", () => {
-      // Read the current open/closed state of the menu.
-      const isOpen =
-        menuButton.getAttribute("aria-expanded") === "true";
+  // ---------------- MOBILE NAVIGATION ----------------
+  if (menuToggle && mobileMenu) {
+    const mobileLinks = mobileMenu.querySelectorAll("a");
 
-      // Update the accessibility state and button label.
-      menuButton.setAttribute("aria-expanded", String(!isOpen));
-      menuButton.setAttribute(
-        "aria-label",
-        isOpen ? "Open navigation" : "Close navigation"
+    // Keep the menu's visible state and accessibility attributes in sync.
+    function setMenuOpen(shouldOpen) {
+      menuToggle.setAttribute(
+        "aria-expanded",
+        String(shouldOpen)
       );
 
-      // Show the menu when opening, hide it when closing.
-      nav.classList.toggle("open", !isOpen);
+      menuToggle.setAttribute(
+        "aria-label",
+        shouldOpen
+          ? "Close navigation menu"
+          : "Open navigation menu"
+      );
+
+      mobileMenu.hidden = !shouldOpen;
+    }
+
+    // Open or close the menu when the menu button is clicked.
+    menuToggle.addEventListener("click", () => {
+      const isOpen =
+        menuToggle.getAttribute("aria-expanded") === "true";
+
+      setMenuOpen(!isOpen);
     });
 
-    // Close the mobile menu after a visitor selects a link.
-    nav.querySelectorAll("a").forEach((link) => {
+    // Close the menu after a visitor selects a destination.
+    mobileLinks.forEach((link) => {
       link.addEventListener("click", () => {
-        menuButton.setAttribute("aria-expanded", "false");
-        menuButton.setAttribute("aria-label", "Open navigation");
-        nav.classList.remove("open");
+        setMenuOpen(false);
       });
     });
 
-    // Let keyboard users close the menu with Escape.
+    // Allow keyboard users to close the menu with Escape.
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        menuButton.setAttribute("aria-expanded", "false");
-        menuButton.setAttribute("aria-label", "Open navigation");
-        nav.classList.remove("open");
+      const isOpen =
+        menuToggle.getAttribute("aria-expanded") === "true";
+
+      if (event.key === "Escape" && isOpen) {
+        setMenuOpen(false);
+        menuToggle.focus();
+      }
+    });
+
+    // Reset the menu if the browser changes to desktop width.
+    const desktopBreakpoint = window.matchMedia(
+      "(min-width: 901px)"
+    );
+
+    desktopBreakpoint.addEventListener("change", (event) => {
+      if (event.matches) {
+        setMenuOpen(false);
       }
     });
   }
 
-  // Add a subtle shadow to the header after scrolling down.
-  const setHeaderShadow = () => {
-    if (header) {
-      header.classList.toggle("scrolled", window.scrollY > 8);
-    }
-  };
+  // ---------------- ACTIVE DESKTOP NAVIGATION ----------------
+  // Highlight the navigation link for the section being viewed.
+  // The page still works normally if IntersectionObserver is unavailable.
+  if (
+    desktopLinks.length &&
+    "IntersectionObserver" in window
+  ) {
+    const sections = Array.from(desktopLinks)
+      .map((link) => {
+        return document.querySelector(
+          link.getAttribute("href")
+        );
+      })
+      .filter(Boolean);
 
-  // Run the header check while the page scrolls.
-  window.addEventListener("scroll", setHeaderShadow, {
-    passive: true
-  });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSections = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              b.intersectionRatio - a.intersectionRatio
+          );
 
-  // Set the correct initial header appearance.
-  setHeaderShadow();
+        // Home is active when the visitor is at the top of the page.
+        const currentId =
+          window.scrollY < 80
+            ? "#home"
+            : visibleSections.length
+              ? `#${visibleSections[0].target.id}`
+              : null;
+
+        if (!currentId) return;
+
+        desktopLinks.forEach((link) => {
+          const isActive =
+            link.getAttribute("href") === currentId;
+
+          link.classList.toggle("is-active", isActive);
+
+          if (isActive) {
+            link.setAttribute("aria-current", "location");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-12% 0px -72% 0px",
+        threshold: [0, 0.15, 0.35, 0.6]
+      }
+    );
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  }
 })();

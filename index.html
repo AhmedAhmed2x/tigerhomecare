@@ -1,96 +1,178 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <!-- Basic page settings -->
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fff8f1">
-  <meta name="description" content="Tiger Home Health Care, LLC provides trusted non-medical in-home support services in Cleveland, Ohio.">
-  <title>Tiger Home Health Care, LLC | Compassionate Care at Home</title>
 
-  <!-- Professional fonts; system fonts are used if these cannot load. -->
+  <title>Tiger Home Health Care, LLC | Cleveland, Ohio</title>
+
+  <meta
+    name="description"
+    content="Tiger Home Health Care provides compassionate non-medical in-home support, personal care, homemaking, meal preparation, companionship, and appointment assistance in Cleveland, Ohio."
+  >
+
+  <meta name="theme-color" content="#fff8f1">
+
+  <!-- Typography used in the supplied mockup -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Keep these files next to index.html. -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- The CSS file will style every section of this page -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- JavaScript runs after the HTML has loaded -->
   <script src="script.js" defer></script>
 </head>
+
 <body>
 
-  <!-- SVG icons: included here so no icon library is needed. -->
-  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <!-- =====================================================
+       SVG ICON LIBRARY
+       These icons are reusable throughout the website.
+       ===================================================== -->
+
+  <svg
+    class="svg-library"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <symbol id="icon-home" viewBox="0 0 24 24">
+      <path d="M3 10.5 12 3l9 7.5"></path>
+      <path d="M5.5 9v12h13V9"></path>
+      <path d="M9 21v-7h6v7"></path>
+    </symbol>
+
     <symbol id="icon-person" viewBox="0 0 24 24">
-      <circle cx="12" cy="7" r="3.5"/>
-      <path d="M5.5 21v-2.2a6.5 6.5 0 0 1 13 0V21"/>
+      <circle cx="12" cy="7" r="4"></circle>
+      <path d="M4.5 21v-2.5a7.5 7.5 0 0 1 15 0V21"></path>
     </symbol>
-    <symbol id="icon-utensils" viewBox="0 0 24 24">
-      <path d="M4 3v6a3 3 0 0 0 6 0V3M7 3v18M17 3v18M17 3c-2.8 2.5-3 5.2-3 8h6V3"/>
+
+    <symbol id="icon-meal" viewBox="0 0 24 24">
+      <path d="M4 3v6a3 3 0 0 0 6 0V3"></path>
+      <path d="M7 3v18"></path>
+      <path d="M17 3v18"></path>
+      <path d="M17 3c-3 3-3 5-3 8h6V3"></path>
     </symbol>
+
     <symbol id="icon-house" viewBox="0 0 24 24">
-      <path d="m3 10 9-7 9 7M5.5 9v12h13V9M9 21v-7h6v7"/>
+      <path d="m2.5 11 9.5-8 9.5 8"></path>
+      <path d="M5 9.5V21h14V9.5"></path>
+      <path d="M9 21v-7h6v7"></path>
     </symbol>
+
     <symbol id="icon-users" viewBox="0 0 24 24">
-      <circle cx="9" cy="8" r="3"/>
-      <path d="M2.5 20v-1.5a6.5 6.5 0 0 1 13 0V20M16 5.5a3 3 0 0 1 0 5.8M18 14a5 5 0 0 1 3.5 4.8V20"/>
+      <circle cx="9" cy="7" r="3"></circle>
+      <circle cx="17" cy="8" r="2.5"></circle>
+      <path d="M2 20v-1.5a7 7 0 0 1 14 0V20"></path>
+      <path d="M16 14a5 5 0 0 1 6 5v1"></path>
     </symbol>
+
     <symbol id="icon-pill" viewBox="0 0 24 24">
-      <path d="M7.2 19.7a5 5 0 0 1-7-7L10 2.9a5 5 0 0 1 7 7l-9.8 9.8Z"/>
-      <path d="m7 7 10 10"/>
+      <path d="M7 21a5 5 0 0 1-3.5-8.5l9-9a5 5 0 0 1 7 7l-9 9A5 5 0 0 1 7 21Z"></path>
+      <path d="m7 7 10 10"></path>
     </symbol>
+
     <symbol id="icon-car" viewBox="0 0 24 24">
-      <path d="m5 11 1.5-5A2.5 2.5 0 0 1 8.9 4h6.2a2.5 2.5 0 0 1 2.4 2L19 11M3 11h18v8H3zM6 19v2M18 19v2M3 14h3M18 14h3"/>
-      <circle cx="6.5" cy="16" r=".7"/>
-      <circle cx="17.5" cy="16" r=".7"/>
+      <path d="m5 11 2-6h10l2 6"></path>
+      <path d="M3 11h18v8H3z"></path>
+      <path d="M6 19v2M18 19v2"></path>
+      <path d="M3 14h3M18 14h3"></path>
     </symbol>
+
     <symbol id="icon-heart" viewBox="0 0 24 24">
-      <path d="M20.8 8.7c0 5.4-8.8 11.2-8.8 11.2S3.2 14.1 3.2 8.7A4.7 4.7 0 0 1 12 6.5a4.7 4.7 0 0 1 8.8 2.2Z"/>
+      <path d="M20.8 8.8c0 5.1-8.8 11.2-8.8 11.2S3.2 13.9 3.2 8.8A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.4Z"></path>
     </symbol>
+
     <symbol id="icon-shield" viewBox="0 0 24 24">
-      <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>
-      <path d="m8.5 12 2.3 2.3 4.8-5"/>
+      <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path>
+      <path d="m8.5 12 2.2 2.2 4.8-5"></path>
     </symbol>
+
     <symbol id="icon-phone" viewBox="0 0 24 24">
-      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.8 2.1Z"/>
+      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2.1Z"></path>
     </symbol>
+
     <symbol id="icon-mail" viewBox="0 0 24 24">
-      <rect x="2.5" y="4.5" width="19" height="15" rx="2"/>
-      <path d="m3.5 6 8.5 6.5L20.5 6"/>
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2"></rect>
+      <path d="m3.5 6 8.5 6.5L20.5 6"></path>
     </symbol>
+
     <symbol id="icon-menu" viewBox="0 0 24 24">
-      <path d="M4 7h16M4 12h16M4 17h16"/>
+      <path d="M4 7h16M4 12h16M4 17h16"></path>
     </symbol>
+
     <symbol id="icon-close" viewBox="0 0 24 24">
-      <path d="m6 6 12 12M18 6 6 18"/>
+      <path d="m6 6 12 12M18 6 6 18"></path>
     </symbol>
+
     <symbol id="icon-arrow" viewBox="0 0 24 24">
-      <path d="M4 12h15M13 5l7 7-7 7"/>
+      <path d="M4 12h16M13 5l7 7-7 7"></path>
     </symbol>
   </svg>
 
-  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <!-- ================= HEADER ================= -->
-  <header class="site-header">
+  <!-- =====================================================
+       HEADER
+       Tiger logo, desktop navigation, phone button,
+       and mobile menu button.
+       ===================================================== -->
+
+  <header class="site-header" id="top">
     <div class="container header-inner">
 
-      <a class="brand" href="#home" aria-label="Tiger Home Health Care home">
-        <svg class="brand-mark" viewBox="0 0 54 52" aria-hidden="true">
-          <path d="M6 22 27 5l21 17" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M12 20v24h30V20" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
-          <path d="M21 29c-3.5-4.4-9-1.4-7 3.2 1.1 2.5 5.3 5.3 7 6.3 1.8-1 6-3.8 7-6.3 2-4.6-3.5-7.6-7-3.2Z" fill="currentColor"/>
-          <circle cx="32" cy="25" r="2.8" fill="currentColor"/>
-          <circle cx="38.5" cy="28" r="2.8" fill="currentColor"/>
-          <circle cx="32.5" cy="32" r="2.8" fill="currentColor"/>
-          <path d="M29 37c1.3-4.7 8.8-4.8 10 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-        <span class="brand-type">
+      <!-- Brand -->
+      <a
+        class="brand"
+        href="#home"
+        aria-label="Tiger Home Health Care home"
+      >
+        <!-- Temporary vector mark; replace with your actual logo
+             image when the original logo file is available. -->
+        <span class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 54 52">
+            <path
+              d="M5 22 27 5l22 17"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+
+            <path
+              d="M11 20v25h32V20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3.5"
+              stroke-linejoin="round"
+            ></path>
+
+            <path
+              d="M21 29c-4-5-9-1-7 3 1 3 5 5 7 7 2-2 6-4 7-7 2-4-3-8-7-3Z"
+              fill="currentColor"
+            ></path>
+
+            <circle cx="33" cy="25" r="3" fill="currentColor"></circle>
+            <circle cx="39" cy="29" r="3" fill="currentColor"></circle>
+            <circle cx="33" cy="33" r="3" fill="currentColor"></circle>
+          </svg>
+        </span>
+
+        <span class="brand-text">
           <strong>Tiger</strong>
           <small>Home Health Care, LLC</small>
         </span>
       </a>
 
+
+      <!-- Desktop navigation -->
       <nav class="desktop-nav" aria-label="Main navigation">
         <a class="nav-link is-active" href="#home">Home</a>
         <a class="nav-link" href="#about">About</a>
@@ -100,43 +182,80 @@
         <a class="nav-link" href="#contact">Contact</a>
       </nav>
 
+
+      <!-- Header phone button -->
       <a class="button button-primary header-call" href="tel:+12164903633">
-        <svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg>
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon-phone"></use>
+        </svg>
         <span>216-490-3633</span>
       </a>
 
-      <button class="menu-toggle" type="button"
+
+      <!-- Mobile menu toggle -->
+      <button
+        class="menu-toggle"
+        type="button"
         aria-label="Open navigation menu"
         aria-controls="mobile-menu"
-        aria-expanded="false">
-        <svg class="icon menu-open-icon" aria-hidden="true"><use href="#icon-menu"/></svg>
-        <svg class="icon menu-close-icon" aria-hidden="true"><use href="#icon-close"/></svg>
+        aria-expanded="false"
+      >
+        <svg class="icon menu-open-icon" aria-hidden="true">
+          <use href="#icon-menu"></use>
+        </svg>
+
+        <svg class="icon menu-close-icon" aria-hidden="true">
+          <use href="#icon-close"></use>
+        </svg>
       </button>
+
     </div>
 
-    <!-- Mobile navigation -->
-    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" hidden>
+
+    <!-- Mobile navigation is hidden until the menu button is clicked -->
+    <nav
+      class="mobile-menu"
+      id="mobile-menu"
+      aria-label="Mobile navigation"
+      hidden
+    >
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#who-we-serve">Who We Serve</a>
       <a href="#insurance">Insurance</a>
       <a href="#contact">Contact</a>
+
       <a class="mobile-call" href="tel:+12164903633">
-        <svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg>
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon-phone"></use>
+        </svg>
         Call 216-490-3633
       </a>
     </nav>
+
   </header>
+
 
   <main id="main-content">
 
-    <!-- ================= HERO ================= -->
+    <!-- ===================================================
+         HERO SECTION
+         Main headline, introduction, calls to action,
+         trust points, and caregiver image.
+         =================================================== -->
+
     <section class="hero" id="home" aria-labelledby="hero-title">
+
       <div class="container hero-grid">
 
+        <!-- Left column: headline and introduction -->
         <div class="hero-copy" id="about">
-          <p class="eyebrow">Compassionate care. Right at home.</p>
+
+          <p class="eyebrow">
+            Compassionate care. Right at home.
+          </p>
+
           <h1 id="hero-title">
             Helping You<br>
             Live Safely and<br>
@@ -145,244 +264,503 @@
           </h1>
 
           <p class="hero-description">
-            Tiger Home Health Care, LLC provides trusted in-home support
-            services in Cleveland, Ohio, helping individuals maintain
-            dignity, independence, and a better quality of life.
+            Tiger Home Health Care, LLC provides trusted in-home
+            support services in Cleveland, Ohio, helping individuals
+            maintain dignity, independence, and a better quality of life.
           </p>
 
+
+          <!-- Primary contact actions -->
           <div class="hero-actions">
+
             <a class="button button-primary" href="tel:+12164903633">
-              <svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg>
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-phone"></use>
+              </svg>
               Call 216-490-3633
             </a>
+
             <a class="button button-outline" href="#contact">
-              <svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg>
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-mail"></use>
+              </svg>
               Contact Us
             </a>
+
           </div>
 
-          <div class="trust-points" aria-label="Our care commitments">
+
+          <!-- Trust points beneath the buttons -->
+          <div class="trust-points">
+
             <div class="trust-point">
               <span class="trust-icon">
-                <svg class="icon" aria-hidden="true"><use href="#icon-heart"/></svg>
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-heart"></use>
+                </svg>
               </span>
+
               <span>Compassionate<br>Caregivers</span>
             </div>
+
+
             <div class="trust-point">
               <span class="trust-icon">
-                <svg class="icon" aria-hidden="true"><use href="#icon-shield"/></svg>
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-shield"></use>
+                </svg>
               </span>
+
               <span>Reliable<br>Support</span>
             </div>
+
+
             <div class="trust-point">
               <span class="trust-icon">
-                <svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg>
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-users"></use>
+                </svg>
               </span>
+
               <span>Quality of Life<br>at Home</span>
             </div>
+
           </div>
         </div>
 
+
+        <!-- Right column: main caregiver photo -->
         <div class="hero-visual">
-          <!-- Image file must exist at this path. -->
-          <img src="assets/images/hero-caregiver.jpg"
+
+          <!--
+            IMPORTANT:
+            Add your actual caregiver image to:
+            assets/images/hero-caregiver.jpg
+          -->
+          <img
+            src="assets/images/hero-caregiver.jpg"
             alt="A home care professional warmly supporting an older woman at home"
-            fetchpriority="high">
-          <div class="hero-image-shade" aria-hidden="true"></div>
+            fetchpriority="high"
+          >
+
         </div>
+
       </div>
+
+      <!-- Orange curved divider is created by CSS -->
       <div class="hero-bottom-wave" aria-hidden="true"></div>
+
     </section>
 
-    <!-- ================= SERVICES ================= -->
-    <section class="services section-pad" id="services" aria-labelledby="services-title">
+
+
+    <!-- ===================================================
+         SERVICES SECTION
+         Six service cards with reusable SVG icons.
+         =================================================== -->
+
+    <section
+      class="services section-pad"
+      id="services"
+      aria-labelledby="services-title"
+    >
+
       <div class="container">
+
         <div class="section-heading centered">
           <p class="eyebrow">Our Services</p>
-          <h2 id="services-title">Support for a Safer, More Comfortable Home</h2>
-          <p>We provide a range of non-medical in-home support services tailored to each individual's needs.</p>
+
+          <h2 id="services-title">
+            Support for a Safer, More Comfortable Home
+          </h2>
+
+          <p>
+            We provide a range of non-medical in-home support services
+            tailored to each individual's needs.
+          </p>
         </div>
+
 
         <div class="service-grid">
+
+          <!-- Service 1 -->
           <article class="service-card">
             <div class="service-icon icon-orange">
-              <svg class="icon" aria-hidden="true"><use href="#icon-person"/></svg>
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-person"></use>
+              </svg>
             </div>
+
             <h3>Personal Care</h3>
-            <p>Assistance with bathing, grooming, dressing, and daily personal routines.</p>
+
+            <p>
+              Assistance with bathing, grooming, dressing,
+              and daily personal routines.
+            </p>
           </article>
 
+
+          <!-- Service 2 -->
           <article class="service-card">
             <div class="service-icon icon-teal">
-              <svg class="icon" aria-hidden="true"><use href="#icon-utensils"/></svg>
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-meal"></use>
+              </svg>
             </div>
+
             <h3>Meal Preparation</h3>
-            <p>Help with preparing nutritious meals and maintaining regular meal routines.</p>
+
+            <p>
+              Help with preparing nutritious meals and maintaining
+              regular meal routines.
+            </p>
           </article>
 
+
+          <!-- Service 3 -->
           <article class="service-card">
             <div class="service-icon icon-gold">
-              <svg class="icon" aria-hidden="true"><use href="#icon-house"/></svg>
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-house"></use>
+              </svg>
             </div>
+
             <h3>Homemaking</h3>
-            <p>Light housekeeping, laundry, and keeping the home clean and comfortable.</p>
+
+            <p>
+              Light housekeeping, laundry, and keeping the home
+              clean and comfortable.
+            </p>
           </article>
 
+
+          <!-- Service 4 -->
           <article class="service-card">
             <div class="service-icon icon-mint">
-              <svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg>
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-users"></use>
+              </svg>
             </div>
+
             <h3>Companionship</h3>
-            <p>Meaningful time together, conversation, and social support.</p>
+
+            <p>
+              Meaningful time together, conversation,
+              and social support.
+            </p>
           </article>
 
+
+          <!-- Service 5 -->
           <article class="service-card">
             <div class="service-icon icon-orange">
-              <svg class="icon" aria-hidden="true"><use href="#icon-pill"/></svg>
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-pill"></use>
+              </svg>
             </div>
+
             <h3>Medication Reminders</h3>
-            <p>Friendly reminders to help keep up with the medication routine.</p>
+
+            <p>
+              Friendly reminders to help keep up with the
+              medication routine.
+            </p>
           </article>
 
+
+          <!-- Service 6 -->
           <article class="service-card">
             <div class="service-icon icon-teal">
-              <svg class="icon" aria-hidden="true"><use href="#icon-car"/></svg>
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-car"></use>
+              </svg>
             </div>
+
             <h3>Appointment Support</h3>
-            <p>Assistance getting to appointments and support while there.</p>
+
+            <p>
+              Assistance with appointments and support while there.
+            </p>
           </article>
+
         </div>
+
       </div>
     </section>
 
-    <!-- ================= WHO WE SERVE ================= -->
-    <section class="audience section-pad" id="who-we-serve" aria-labelledby="audience-title">
+
+
+    <!-- ===================================================
+         WHO WE SERVE
+         Blue background, explanatory text, three photo cards.
+         =================================================== -->
+
+    <section
+      class="audience section-pad"
+      id="who-we-serve"
+      aria-labelledby="audience-title"
+    >
+
       <div class="container audience-layout">
 
+        <!-- Section introduction -->
         <div class="audience-copy">
+
           <p class="eyebrow">Who We Serve</p>
-          <h2 id="audience-title">Care for Every Stage of Life</h2>
+
+          <h2 id="audience-title">
+            Care for Every Stage of Life
+          </h2>
+
           <p>
-            We support seniors, individuals with disabilities, and adults
-            who need assistance at home. Our goal is to help each person
-            live safely, comfortably, and independently.
+            We support seniors, individuals with disabilities,
+            and adults who need assistance at home. Our goal is
+            to help each person live safely, comfortably,
+            and independently.
           </p>
+
           <a class="button button-primary learn-button" href="#contact">
             Learn More
-            <svg class="icon" aria-hidden="true"><use href="#icon-arrow"/></svg>
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-arrow"></use>
+            </svg>
           </a>
+
         </div>
 
+
+        <!-- Three audience cards -->
         <div class="audience-cards">
+
+          <!-- Seniors -->
           <article class="audience-card">
-            <img src="assets/images/serving-seniors.jpg"
-              alt="An older adult smiling" loading="lazy">
+
+            <img
+              src="assets/images/serving-seniors.jpg"
+              alt="A smiling senior"
+              loading="lazy"
+            >
+
             <div class="audience-card-text">
               <h3>Seniors</h3>
-              <p>Support to maintain independence and dignity.</p>
+
+              <p>
+                Support to maintain independence and dignity.
+              </p>
             </div>
+
           </article>
 
+
+          <!-- Individuals with disabilities -->
           <article class="audience-card">
-            <img src="assets/images/serving-disability.jpg"
-              alt="An adult with a disability smiling" loading="lazy">
+
+            <img
+              src="assets/images/serving-disability.jpg"
+              alt="An adult with a disability"
+              loading="lazy"
+            >
+
             <div class="audience-card-text">
-              <h3>Individuals<br>with Disabilities</h3>
-              <p>Assistance with daily living and greater independence.</p>
+              <h3>Individuals with Disabilities</h3>
+
+              <p>
+                Assistance with daily living and greater independence.
+              </p>
             </div>
+
           </article>
 
+
+          <!-- Adults who need support -->
           <article class="audience-card">
-            <img src="assets/images/serving-adults.jpg"
-              alt="An adult smiling at home" loading="lazy">
+
+            <img
+              src="assets/images/serving-adults.jpg"
+              alt="An adult smiling at home"
+              loading="lazy"
+            >
+
             <div class="audience-card-text">
               <h3>Adults in Need of Support</h3>
-              <p>Reliable help to live safely at home.</p>
+
+              <p>
+                Reliable help to live safely at home.
+              </p>
             </div>
+
           </article>
+
         </div>
+
       </div>
     </section>
 
-    <!-- ================= INSURANCE ================= -->
-    <section class="insurance section-pad" id="insurance" aria-labelledby="insurance-title">
+
+
+    <!-- ===================================================
+         INSURANCE AND OHIO PASSPORT
+         Five cards matching the reference layout.
+         =================================================== -->
+
+    <section
+      class="insurance section-pad"
+      id="insurance"
+      aria-labelledby="insurance-title"
+    >
+
       <div class="container">
+
         <div class="section-heading centered">
+
           <p class="eyebrow">Accepted Insurance Plans</p>
-          <h2 id="insurance-title">We Work with Leading Insurance Plans</h2>
-          <p>We are an approved provider for the following plans and Ohio waiver services.</p>
+
+          <h2 id="insurance-title">
+            We Work with Leading Insurance Plans
+          </h2>
+
+          <p>
+            We are an approved provider for the following plans
+            and Ohio waiver services.
+          </p>
+
         </div>
 
-        <!-- Editable text-based wordmarks; verify plan participation before publishing. -->
-        <div class="insurance-grid" aria-label="Insurance and waiver plans">
 
+        <div class="insurance-grid">
+
+          <!-- CareSource -->
           <div class="insurance-card caresource">
-            <span class="cs-heart" aria-hidden="true">♥</span>
-            <span class="insurance-wordmark">CareSource</span>
+            <span class="cs-symbol" aria-hidden="true">♥</span>
+            <span class="insurance-name">CareSource</span>
           </div>
 
+
+          <!-- Anthem -->
           <div class="insurance-card anthem">
             <span class="anthem-symbol" aria-hidden="true">✣</span>
-            <span class="insurance-wordmark">Anthem</span>
+            <span class="insurance-name">Anthem</span>
           </div>
 
+
+          <!-- Buckeye Health Plan -->
           <div class="insurance-card buckeye">
-            <span class="leaf-symbol" aria-hidden="true">❧</span>
-            <span class="insurance-wordmark">buckeye<br><small>health plan.</small></span>
+            <span class="buckeye-symbol" aria-hidden="true">❧</span>
+
+            <span class="insurance-name">
+              buckeye
+              <small>health plan.</small>
+            </span>
           </div>
 
+
+          <!-- Molina Healthcare -->
           <div class="insurance-card molina">
+
             <span class="molina-symbol" aria-hidden="true">
               <i></i><i></i><i></i>
             </span>
-            <span class="insurance-wordmark">MOLINA<br><small>HEALTHCARE</small></span>
+
+            <span class="insurance-name">
+              MOLINA
+              <small>HEALTHCARE</small>
+            </span>
+
           </div>
 
+
+          <!-- Ohio PASSPORT -->
           <div class="insurance-card passport">
+
             <span class="passport-symbol" aria-hidden="true">♡</span>
-            <span class="insurance-wordmark">Ohio PASSPORT<br><small>Waiver Services</small></span>
+
+            <span class="insurance-name">
+              Ohio PASSPORT
+              <small>Waiver Services</small>
+            </span>
+
           </div>
 
         </div>
+
       </div>
     </section>
 
   </main>
 
-  <!-- ================= CONTACT FOOTER ================= -->
+
+
+  <!-- =====================================================
+       CONTACT FOOTER
+       Dark navy background, telephone button, email button.
+       ===================================================== -->
+
   <footer class="contact-footer" id="contact">
+
     <div class="container contact-layout">
 
+      <!-- Footer headline -->
       <div class="contact-title-wrap">
+
         <span class="footer-phone-icon">
-          <svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg>
+          <svg class="icon" aria-hidden="true">
+            <use href="#icon-phone"></use>
+          </svg>
         </span>
-        <h2>Have Questions?<br>We're Here to Help.</h2>
+
+        <h2>
+          Have Questions?<br>
+          We're Here to Help.
+        </h2>
+
       </div>
 
+
+      <!-- Contact message -->
       <p class="contact-message">
-        Call us today at <strong>216-490-3633</strong> or send us a message.<br>
+        Call us today at <strong>216-490-3633</strong>
+        or send us a message.<br>
         Our team is ready to support you.
       </p>
 
+
+      <!-- Contact buttons -->
       <div class="contact-actions">
+
         <a class="button button-primary" href="tel:+12164903633">
-          <svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg>
+          <svg class="icon" aria-hidden="true">
+            <use href="#icon-phone"></use>
+          </svg>
           Call 216-490-3633
         </a>
 
-        <a class="button button-light"
-          href="mailto:info@tigerhomehealthcare.com?subject=Tiger%20Home%20Health%20Care%20Inquiry">
-          <svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg>
+        <a
+          class="button button-light"
+          href="mailto:info@tigerhomehealth.com?subject=Tiger%20Home%20Health%20Care%20Inquiry"
+        >
+          <svg class="icon" aria-hidden="true">
+            <use href="#icon-mail"></use>
+          </svg>
           Contact Us
         </a>
+
       </div>
+
     </div>
 
+
+    <!-- Copyright and return-to-top link -->
     <div class="container footer-bottom">
-      <p>© <span id="current-year">2026</span> Tiger Home Health Care, LLC. All rights reserved.</p>
-      <a href="#home">Back to top ↑</a>
+
+      <p>
+        © <span id="current-year">2026</span>
+        Tiger Home Health Care, LLC. All rights reserved.
+      </p>
+
+      <a href="#top">Back to top ↑</a>
+
     </div>
+
   </footer>
 
 </body>

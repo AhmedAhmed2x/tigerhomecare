@@ -1,30 +1,53 @@
 
 /* ==========================================================
    TIGER HOME HEALTH CARE, LLC
-   Website interactions — no external JavaScript libraries
+   Main website JavaScript
+   Compatible with index.html and style.css from Steps 1–2.
+   No external JavaScript libraries required.
    ========================================================== */
 
 (() => {
   "use strict";
 
-  // Find the elements needed for the interactive features.
+  /* --------------------------------------------------------
+     1. SELECT PAGE ELEMENTS
+     -------------------------------------------------------- */
+
   const menuToggle = document.querySelector(".menu-toggle");
   const mobileMenu = document.querySelector("#mobile-menu");
-  const desktopLinks = document.querySelectorAll(
-    ".desktop-nav .nav-link"
-  );
-  const yearNode = document.querySelector("#current-year");
 
-  // Update the copyright year automatically.
-  if (yearNode) {
-    yearNode.textContent = String(new Date().getFullYear());
+  const desktopLinks = Array.from(
+    document.querySelectorAll(".desktop-nav .nav-link")
+  );
+
+  const yearElement = document.querySelector("#current-year");
+
+
+  /* --------------------------------------------------------
+     2. AUTOMATIC COPYRIGHT YEAR
+     -------------------------------------------------------- */
+
+  if (yearElement) {
+    yearElement.textContent = String(new Date().getFullYear());
   }
 
-  // ---------------- MOBILE NAVIGATION ----------------
-  if (menuToggle && mobileMenu) {
-    const mobileLinks = mobileMenu.querySelectorAll("a");
 
-    // Keep the menu's visible state and accessibility attributes in sync.
+  /* --------------------------------------------------------
+     3. MOBILE NAVIGATION
+     Open and close the mobile menu safely.
+     -------------------------------------------------------- */
+
+  if (menuToggle && mobileMenu) {
+    const mobileLinks = Array.from(
+      mobileMenu.querySelectorAll("a")
+    );
+
+    /**
+     * Updates the mobile menu's visibility, button label,
+     * and ARIA state together.
+     *
+     * @param {boolean} shouldOpen - Whether the menu should open.
+     */
     function setMenuOpen(shouldOpen) {
       menuToggle.setAttribute(
         "aria-expanded",
@@ -41,100 +64,183 @@
       mobileMenu.hidden = !shouldOpen;
     }
 
-    // Open or close the menu when the menu button is clicked.
+
+    // Toggle the menu when the visitor presses the menu button.
     menuToggle.addEventListener("click", () => {
-      const isOpen =
+      const currentlyOpen =
         menuToggle.getAttribute("aria-expanded") === "true";
 
-      setMenuOpen(!isOpen);
+      setMenuOpen(!currentlyOpen);
     });
 
-    // Close the menu after a visitor selects a destination.
+
+    // Close the menu when the visitor chooses a navigation link.
     mobileLinks.forEach((link) => {
       link.addEventListener("click", () => {
         setMenuOpen(false);
       });
     });
 
-    // Allow keyboard users to close the menu with Escape.
+
+    // Allow keyboard users to close the menu using Escape.
     document.addEventListener("keydown", (event) => {
-      const isOpen =
+      const currentlyOpen =
         menuToggle.getAttribute("aria-expanded") === "true";
 
-      if (event.key === "Escape" && isOpen) {
+      if (event.key === "Escape" && currentlyOpen) {
         setMenuOpen(false);
         menuToggle.focus();
       }
     });
 
-    // Reset the menu if the browser changes to desktop width.
+
+    // Close the mobile menu if the viewport changes to desktop.
     const desktopBreakpoint = window.matchMedia(
       "(min-width: 901px)"
     );
 
-    desktopBreakpoint.addEventListener("change", (event) => {
+    function handleBreakpointChange(event) {
       if (event.matches) {
         setMenuOpen(false);
       }
-    });
+    }
+
+    // Support modern browsers and older browser implementations.
+    if (desktopBreakpoint.addEventListener) {
+      desktopBreakpoint.addEventListener(
+        "change",
+        handleBreakpointChange
+      );
+    } else {
+      desktopBreakpoint.addListener(handleBreakpointChange);
+    }
   }
 
-  // ---------------- ACTIVE DESKTOP NAVIGATION ----------------
-  // Highlight the navigation link for the section being viewed.
-  // The page still works normally if IntersectionObserver is unavailable.
-  if (
-    desktopLinks.length &&
-    "IntersectionObserver" in window
-  ) {
-    const sections = Array.from(desktopLinks)
+
+  /* --------------------------------------------------------
+     4. ACTIVE DESKTOP NAVIGATION
+     Highlight the link corresponding to the visible section.
+     -------------------------------------------------------- */
+
+  if (desktopLinks.length > 0) {
+    const sections = desktopLinks
       .map((link) => {
-        return document.querySelector(
-          link.getAttribute("href")
-        );
+        const targetId = link.getAttribute("href");
+
+        // Only observe valid in-page links.
+        if (!targetId || !targetId.startsWith("#")) {
+          return null;
+        }
+
+        return document.querySelector(targetId);
       })
       .filter(Boolean);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleSections = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (a, b) =>
-              b.intersectionRatio - a.intersectionRatio
-          );
+    /**
+     * Applies the active state to the correct desktop link.
+     *
+     * @param {string} sectionId - ID of the current section.
+     */
+    function setActiveNavigation(sectionId) {
+      desktopLinks.forEach((link) => {
+        const isActive =
+          link.getAttribute("href") === `#${sectionId}`;
 
-        // Home is active when the visitor is at the top of the page.
-        const currentId =
-          window.scrollY < 80
-            ? "#home"
-            : visibleSections.length
-              ? `#${visibleSections[0].target.id}`
-              : null;
+        link.classList.toggle("is-active", isActive);
 
-        if (!currentId) return;
+        if (isActive) {
+          link.setAttribute("aria-current", "location");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    }
 
-        desktopLinks.forEach((link) => {
-          const isActive =
-            link.getAttribute("href") === currentId;
 
-          link.classList.toggle("is-active", isActive);
+    // Start with Home active.
+    setActiveNavigation("home");
 
-          if (isActive) {
-            link.setAttribute("aria-current", "location");
-          } else {
-            link.removeAttribute("aria-current");
+
+    // Observe visible sections without running a scroll handler
+    // on every single pixel of movement.
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          // When several sections intersect, choose the one
+          // nearest the top of the viewport.
+          const visibleSections = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort(
+              (a, b) =>
+                a.boundingClientRect.top -
+                b.boundingClientRect.top
+            );
+
+          if (visibleSections.length > 0) {
+            setActiveNavigation(
+              visibleSections[0].target.id
+            );
           }
-        });
-      },
-      {
-        root: null,
-        rootMargin: "-12% 0px -72% 0px",
-        threshold: [0, 0.15, 0.35, 0.6]
-      }
-    );
+        },
+        {
+          root: null,
+          rootMargin: "-15% 0px -72% 0px",
+          threshold: [0, 0.1, 0.25, 0.5]
+        }
+      );
 
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+
+      // Keep Home active when the visitor returns to the top.
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (window.scrollY < 80) {
+            setActiveNavigation("home");
+          }
+        },
+        { passive: true }
+      );
+    } else {
+      // Fallback for browsers without IntersectionObserver.
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (window.scrollY < 80) {
+            setActiveNavigation("home");
+          }
+        },
+        { passive: true }
+      );
+    }
   }
+
+
+  /* --------------------------------------------------------
+     5. IMAGE ERROR DIAGNOSTICS
+     Log missing image paths so they can be identified easily.
+     This does not replace missing photos with fake content.
+     -------------------------------------------------------- */
+
+  document.querySelectorAll("img").forEach((imageElement) => {
+    imageElement.addEventListener("error", () => {
+      console.error(
+        "[Tiger Home Health Care] Image failed to load:",
+        imageElement.getAttribute("src")
+      );
+    });
+  });
+
+
+  /* --------------------------------------------------------
+     6. INITIALIZATION CHECK
+     Confirms that the script loaded successfully.
+     -------------------------------------------------------- */
+
+  console.info(
+    "Tiger Home Health Care website JavaScript initialized."
+  );
+
 })();

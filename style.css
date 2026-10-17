@@ -1,38 +1,56 @@
 
 /* ==========================================================
    TIGER HOME HEALTH CARE, LLC
-   Responsive styling based on your supplied website mockup
+   Website styling based on the supplied reference mockup
+   Matches the HTML provided in Step 1.
    ========================================================== */
 
-/* ---------- COLORS AND DESIGN VARIABLES ---------- */
+/* 1. BRAND COLORS AND GLOBAL SETTINGS
+   ---------------------------------------------------------- */
+
 :root {
-  --orange: #ff6a00;
-  --orange-dark: #c94f00;
-  --orange-soft: #ffe9d9;
-  --navy: #10222d;
-  --navy-deep: #0a171e;
+  --orange: #ff5b0b;
+  --orange-bright: #ff6a00;
+  --orange-dark: #d94e00;
+  --orange-soft: #ffeadc;
+
+  --navy: #102747;
+  --navy-dark: #0b1c30;
+  --navy-deep: #091a2c;
+
   --cream: #fff8f1;
   --peach: #fff0e3;
   --peach-deep: #ffe0c7;
-  --gray: #56636b;
-  --line: rgba(16, 34, 45, 0.12);
+
+  --blue-soft: #e8f4fc;
+  --blue-line: #d9e9f5;
+
   --teal: #5fb3a8;
-  --white: #ffffff;
-  --mint-soft: #dff2ed;
-  --blue-soft: #e9f5fc;
+  --teal-soft: #dff2ee;
+  --mint-soft: #e0f2ec;
   --gold-soft: #fff0d7;
 
-  --radius: 20px;
-  --radius-sm: 12px;
-  --shadow: 0 10px 30px rgba(16, 34, 45, 0.08);
+  --gray: #53616b;
+  --line: rgba(16, 39, 71, 0.12);
+  --white: #ffffff;
+
+  --radius: 16px;
+  --radius-sm: 11px;
+  --pill: 999px;
+
+  --shadow: 0 8px 24px rgba(16, 39, 71, 0.07);
 
   --font-head: "DM Serif Display", Georgia, "Times New Roman", serif;
   --font-body: "Nunito Sans", Arial, Helvetica, sans-serif;
 
-  --container: 1240px;
+  --container: 1280px;
+  --header-height: 66px;
 }
 
-/* ---------- GLOBAL RESET ---------- */
+
+/* 2. RESET AND BASE ELEMENTS
+   ---------------------------------------------------------- */
+
 *,
 *::before,
 *::after {
@@ -41,7 +59,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 82px;
+  scroll-padding-top: calc(var(--header-height) + 12px);
 }
 
 body {
@@ -49,9 +67,10 @@ body {
   color: var(--navy);
   background: var(--cream);
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 img {
@@ -63,9 +82,7 @@ a {
   color: inherit;
 }
 
-button,
-input,
-textarea {
+button {
   font: inherit;
 }
 
@@ -76,8 +93,8 @@ a {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 3px solid #1d76c1;
-  outline-offset: 3px;
+  outline: 3px solid #2176c1;
+  outline-offset: 4px;
 }
 
 h1,
@@ -88,13 +105,24 @@ p {
 }
 
 h1,
+h2,
+h3 {
+  color: var(--navy);
+}
+
+h1,
 h2 {
   font-family: var(--font-head);
   font-weight: 400;
-  letter-spacing: -0.7px;
+  letter-spacing: -0.45px;
 }
 
-.svg-sprite {
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* Hide the reusable SVG icon library without removing its symbols. */
+.svg-library {
   position: absolute;
   width: 0;
   height: 0;
@@ -102,6 +130,7 @@ h2 {
 }
 
 .icon {
+  display: inline-block;
   width: 1.15em;
   height: 1.15em;
   flex: 0 0 auto;
@@ -113,12 +142,12 @@ h2 {
 }
 
 .container {
-  width: min(calc(100% - 64px), var(--container));
+  width: min( calc(100% - 64px), var(--container) );
   margin-inline: auto;
 }
 
 .section-pad {
-  padding: 28px 0;
+  padding-block: 32px;
 }
 
 .skip-link {
@@ -130,24 +159,26 @@ h2 {
   color: var(--white);
   background: var(--navy);
   border-radius: 8px;
-  transform: translateY(-160%);
+  transform: translateY(-150%);
 }
 
 .skip-link:focus {
   transform: translateY(0);
 }
 
-/* ---------- HEADER AND NAVIGATION ---------- */
+
+/* 3. HEADER AND LOGO
+   ---------------------------------------------------------- */
+
 .site-header {
   position: relative;
-  z-index: 20;
+  z-index: 50;
   background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid rgba(16, 34, 45, 0.07);
-  box-shadow: 0 4px 18px rgba(16, 34, 45, 0.025);
+  border-bottom: 1px solid rgba(16, 39, 71, 0.07);
 }
 
 .header-inner {
-  min-height: 64px;
+  min-height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -158,52 +189,69 @@ h2 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  text-decoration: none;
   flex: 0 0 auto;
+  color: var(--navy);
+  text-decoration: none;
 }
 
-.brand-mark {
-  width: 46px;
-  height: 45px;
+.brand-logo {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 46px;
   color: var(--orange);
   flex: 0 0 auto;
 }
 
-.brand-type {
+.brand-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.brand-text {
   display: flex;
   flex-direction: column;
   line-height: 1.02;
   white-space: nowrap;
 }
 
-.brand-type strong {
+.brand-text strong {
   font-family: var(--font-head);
-  font-size: 27px;
+  font-size: 29px;
+  font-weight: 400;
   letter-spacing: -0.5px;
 }
 
-.brand-type small {
+.brand-text small {
   margin-top: 3px;
   font-size: 11px;
-  font-weight: 800;
-  letter-spacing: -0.2px;
+  font-weight: 900;
+  letter-spacing: -0.15px;
 }
+
+
+/* 4. DESKTOP NAVIGATION
+   ---------------------------------------------------------- */
 
 .desktop-nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(12px, 1.7vw, 27px);
+  gap: clamp(13px, 1.8vw, 27px);
   margin-left: auto;
 }
 
 .nav-link {
   position: relative;
-  padding: 23px 0 21px;
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--header-height);
+  color: var(--navy);
   font-size: 13px;
   font-weight: 800;
   white-space: nowrap;
+  text-decoration: none;
   transition: color 160ms ease;
 }
 
@@ -213,26 +261,30 @@ h2 {
 }
 
 .nav-link.is-active::after {
-  content: "";
   position: absolute;
-  left: 0;
   right: 0;
-  bottom: 13px;
+  bottom: 11px;
+  left: 0;
   height: 2px;
+  content: "";
   background: var(--orange);
-  border-radius: 99px;
+  border-radius: var(--pill);
 }
 
-/* ---------- BUTTONS ---------- */
+
+/* 5. BUTTONS
+   ---------------------------------------------------------- */
+
 .button {
-  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  padding: 10px 19px;
+  min-height: 43px;
+  padding: 11px 19px;
   border: 1.5px solid transparent;
-  border-radius: 999px;
+  border-radius: var(--pill);
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 900;
   line-height: 1.2;
@@ -241,9 +293,10 @@ h2 {
   white-space: nowrap;
   cursor: pointer;
   transition:
-    transform 160ms ease,
     background-color 160ms ease,
-    box-shadow 160ms ease;
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
 .button:hover {
@@ -253,17 +306,19 @@ h2 {
 .button-primary {
   color: var(--white);
   background: var(--orange);
-  box-shadow: 0 5px 12px rgba(255, 106, 0, 0.12);
+  border-color: var(--orange);
+  box-shadow: 0 4px 12px rgba(255, 91, 11, 0.13);
 }
 
 .button-primary:hover {
   background: var(--orange-dark);
-  box-shadow: 0 7px 16px rgba(201, 79, 0, 0.19);
+  border-color: var(--orange-dark);
+  box-shadow: 0 6px 16px rgba(217, 78, 0, 0.2);
 }
 
 .button-outline {
   color: var(--navy);
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.8);
   border-color: var(--navy);
 }
 
@@ -274,26 +329,30 @@ h2 {
 .button-light {
   color: var(--navy);
   background: var(--white);
-  border-color: rgba(16, 34, 45, 0.08);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  border-color: rgba(16, 39, 71, 0.08);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
 }
 
 .header-call {
-  min-height: 42px;
+  min-height: 41px;
   padding-inline: 17px;
+  flex: 0 0 auto;
 }
 
-/* ---------- MOBILE MENU ---------- */
+
+/* 6. MOBILE MENU
+   ---------------------------------------------------------- */
+
 .menu-toggle {
   display: none;
   width: 44px;
   height: 44px;
-  border: 0;
-  border-radius: 12px;
-  color: var(--navy);
-  background: transparent;
   align-items: center;
   justify-content: center;
+  color: var(--navy);
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -306,27 +365,36 @@ h2 {
   display: none;
 }
 
+.menu-toggle[aria-expanded="true"] .menu-open-icon {
+  display: none;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-close-icon {
+  display: block;
+}
+
 .mobile-menu {
-  padding: 10px 24px 20px;
+  padding: 10px 22px 20px;
   background: var(--white);
   border-top: 1px solid var(--line);
-  box-shadow: 0 14px 20px rgba(16, 34, 45, 0.08);
+  box-shadow: 0 12px 22px rgba(16, 39, 71, 0.08);
 }
 
 .mobile-menu[hidden] {
   display: none !important;
 }
 
-.mobile-menu a {
+.mobile-menu > a {
   display: block;
-  padding: 12px 5px;
+  padding: 12px 4px;
   color: var(--navy);
+  font-size: 14px;
   font-weight: 800;
   text-decoration: none;
-  border-bottom: 1px solid rgba(16, 34, 45, 0.07);
+  border-bottom: 1px solid rgba(16, 39, 71, 0.07);
 }
 
-.mobile-menu a:hover {
+.mobile-menu > a:hover {
   color: var(--orange);
 }
 
@@ -334,22 +402,27 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 9px;
+  margin-top: 13px;
+  padding: 13px;
   color: var(--white);
   background: var(--orange);
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--pill);
 }
 
-/* ---------- HERO SECTION ---------- */
+
+/* 7. HERO SECTION
+   ---------------------------------------------------------- */
+
 .hero {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
   background: linear-gradient(
-    100deg,
+    108deg,
     #fffaf5 0%,
-    #fff7ee 59%,
+    #fff6ed 57%,
     #ffead9 100%
   );
 }
@@ -357,33 +430,38 @@ h2 {
 .hero-grid {
   position: relative;
   z-index: 1;
-  min-height: 356px;
   display: grid;
   grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
   align-items: stretch;
-  gap: 14px;
+  gap: 20px;
+  min-height: 365px;
 }
 
 .hero-copy {
   align-self: center;
-  padding: 22px 0 30px 26px;
+  padding: 27px 0 36px 27px;
 }
 
 .eyebrow {
-  margin: 0 0 6px;
+  margin-bottom: 7px;
   color: var(--orange-dark);
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 1.05px;
-  line-height: 1.25;
+  line-height: 1.3;
   text-transform: uppercase;
 }
 
 .hero h1 {
-  max-width: 480px;
-  margin-bottom: 8px;
-  font-size: clamp(34px, 3.5vw, 47px);
+  max-width: 490px;
+  margin-bottom: 9px;
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: clamp(38px, 3.65vw, 49px);
+  font-weight: 400;
   line-height: 0.99;
+  letter-spacing: -0.65px;
 }
 
 .hero h1 span {
@@ -393,9 +471,9 @@ h2 {
 .hero-description {
   max-width: 440px;
   margin-bottom: 15px;
-  color: #273741;
+  color: #2e3c46;
   font-size: 13.5px;
-  line-height: 1.42;
+  line-height: 1.48;
 }
 
 .hero-actions {
@@ -404,79 +482,93 @@ h2 {
   gap: 10px;
 }
 
+.hero-actions .icon {
+  width: 16px;
+  height: 16px;
+}
+
 .trust-points {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: clamp(14px, 2.2vw, 29px);
-  margin-top: 20px;
+  gap: clamp(15px, 2.1vw, 28px);
+  margin-top: 21px;
 }
 
 .trust-point {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  color: var(--navy);
   font-size: 11.5px;
   font-weight: 900;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
 .trust-icon {
   display: grid;
   place-items: center;
   color: var(--orange);
+  flex: 0 0 auto;
 }
 
 .trust-icon .icon {
   width: 27px;
   height: 27px;
-  stroke-width: 2.8;
+  stroke-width: 2.7;
 }
 
 .hero-visual {
   position: relative;
-  min-height: 356px;
   align-self: stretch;
+  min-width: 0;
+  min-height: 365px;
   overflow: hidden;
-  border-bottom-left-radius: 46% 8%;
+  border-bottom-left-radius: 48% 10%;
 }
 
 .hero-visual img {
   width: 100%;
   height: 100%;
-  min-height: 356px;
+  min-height: 365px;
   object-fit: cover;
-  object-position: 49% center;
+  object-position: 50% center;
 }
 
-.hero-image-shade {
+/* A subtle fade blends the image into the warm hero background. */
+.hero-visual::after {
   position: absolute;
   inset: 0;
+  content: "";
   pointer-events: none;
   background: linear-gradient(
     90deg,
-    rgba(255, 248, 241, 0.03),
-    transparent 25%
+    rgba(255, 248, 241, 0.12),
+    transparent 23%
   );
 }
 
-/* Decorative orange curve under the hero image */
+/* Orange curved edge beneath the caregiver image. */
 .hero-bottom-wave {
   position: absolute;
   z-index: 2;
   right: -3%;
-  bottom: -25px;
+  bottom: -27px;
   left: -3%;
-  height: 57px;
+  height: 61px;
   border-top: 9px solid var(--orange);
-  border-radius: 48% 53% 0 0 / 45% 70% 0 0;
-  transform: rotate(-1.2deg);
+  border-radius: 48% 53% 0 0 / 42% 75% 0 0;
+  transform: rotate(-1deg);
   pointer-events: none;
 }
 
-/* ---------- SECTION HEADINGS ---------- */
+
+/* 8. SHARED SECTION HEADINGS
+   ---------------------------------------------------------- */
+
 .section-heading {
-  margin-bottom: 19px;
+  margin-bottom: 20px;
 }
 
 .section-heading.centered {
@@ -484,24 +576,34 @@ h2 {
 }
 
 .section-heading .eyebrow {
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .section-heading h2 {
-  margin-bottom: 2px;
-  font-size: clamp(25px, 2.35vw, 32px);
-  line-height: 1.12;
+  margin-bottom: 5px;
+  font-family: var(--font-head);
+  font-size: clamp(27px, 2.5vw, 34px);
+  font-weight: 400;
+  line-height: 1.13;
+  letter-spacing: -0.4px;
 }
 
 .section-heading > p:last-child {
-  margin-bottom: 0;
-  color: #34454f;
+  color: #344651;
   font-size: 13px;
+  line-height: 1.45;
 }
 
-/* ---------- SERVICES CARDS ---------- */
+
+/* 9. SERVICES SECTION
+   ---------------------------------------------------------- */
+
 .services {
-  background: linear-gradient(180deg, #fff8f1 0%, #fffaf6 100%);
+  background: linear-gradient(
+    180deg,
+    #fff8f1 0%,
+    #fffaf6 100%
+  );
 }
 
 .service-grid {
@@ -511,14 +613,25 @@ h2 {
 }
 
 .service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-width: 0;
-  min-height: 162px;
-  padding: 12px 11px 13px;
+  min-height: 166px;
+  padding: 13px 11px 14px;
   text-align: center;
-  background: rgba(255, 255, 255, 0.91);
-  border: 1px solid rgba(16, 34, 45, 0.025);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(16, 39, 71, 0.035);
   border-radius: 15px;
-  box-shadow: 0 2px 7px rgba(16, 34, 45, 0.015);
+  box-shadow: 0 2px 8px rgba(16, 39, 71, 0.02);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
 }
 
 .service-icon {
@@ -526,14 +639,15 @@ h2 {
   place-items: center;
   width: 52px;
   height: 52px;
-  margin: 0 auto 7px;
+  margin: 0 auto 9px;
   border-radius: 50%;
+  flex: 0 0 auto;
 }
 
 .service-icon .icon {
-  width: 24px;
-  height: 24px;
-  stroke-width: 2.3;
+  width: 25px;
+  height: 25px;
+  stroke-width: 2.4;
 }
 
 .icon-orange {
@@ -557,52 +671,64 @@ h2 {
 }
 
 .service-card h3 {
-  margin-bottom: 4px;
+  margin-bottom: 5px;
+  color: var(--navy);
   font-family: var(--font-head);
-  font-size: 15px;
-  line-height: 1.1;
+  font-size: 15.5px;
+  font-weight: 400;
+  line-height: 1.12;
 }
 
 .service-card p {
   margin-bottom: 0;
-  color: #364751;
+  color: #354752;
   font-size: 11.8px;
-  line-height: 1.3;
+  line-height: 1.38;
 }
 
-/* ---------- WHO WE SERVE ---------- */
+
+/* 10. WHO WE SERVE SECTION
+   ---------------------------------------------------------- */
+
 .audience {
-  background: linear-gradient(105deg, #e8f5fc, #e3f1fa);
+  background: linear-gradient(
+    110deg,
+    #e8f4fc 0%,
+    #e4f2fa 100%
+  );
 }
 
 .audience-layout {
   display: grid;
   grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.35fr);
   align-items: center;
-  gap: 27px;
+  gap: 28px;
 }
 
 .audience-copy .eyebrow {
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .audience-copy h2 {
-  max-width: 420px;
-  margin-bottom: 8px;
-  font-size: clamp(28px, 2.6vw, 36px);
-  line-height: 1.05;
+  max-width: 430px;
+  margin-bottom: 9px;
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: clamp(30px, 2.7vw, 37px);
+  font-weight: 400;
+  line-height: 1.08;
 }
 
 .audience-copy > p:not(.eyebrow) {
-  max-width: 410px;
-  margin-bottom: 12px;
-  color: #263943;
-  font-size: 13.3px;
-  line-height: 1.4;
+  max-width: 425px;
+  margin-bottom: 14px;
+  color: #293d49;
+  font-size: 13.4px;
+  line-height: 1.48;
 }
 
 .learn-button {
-  min-width: 123px;
+  min-width: 124px;
   min-height: 39px;
 }
 
@@ -614,56 +740,64 @@ h2 {
 .audience-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
   align-items: stretch;
+  gap: 13px;
 }
 
 .audience-card {
-  min-width: 0;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
   text-align: center;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(16, 34, 45, 0.035);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(16, 39, 71, 0.04);
   border-radius: 13px;
-  box-shadow: 0 5px 15px rgba(16, 34, 45, 0.025);
+  box-shadow: 0 4px 13px rgba(16, 39, 71, 0.025);
 }
 
 .audience-card img {
   width: 100%;
-  height: 91px;
+  height: 104px;
   object-fit: cover;
-  object-position: center 32%;
+  object-position: center 35%;
+  background: var(--blue-soft);
 }
 
 .audience-card-text {
+  display: flex;
   flex: 1;
-  padding: 7px 8px 10px;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 9px 9px 12px;
 }
 
 .audience-card h3 {
-  min-height: 19px;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
+  color: var(--navy);
   font-family: var(--font-head);
-  font-size: 13.5px;
-  line-height: 1.05;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.12;
 }
 
 .audience-card p {
   margin-bottom: 0;
-  color: #384953;
+  color: #384b56;
   font-size: 11.5px;
-  line-height: 1.25;
+  line-height: 1.4;
 }
 
-/* ---------- ACCEPTED INSURANCE PLANS ---------- */
+
+/* 11. INSURANCE CARDS
+   ---------------------------------------------------------- */
+
 .insurance {
   background: #fffdfa;
 }
 
 .insurance .section-heading {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .insurance-grid {
@@ -673,57 +807,64 @@ h2 {
 }
 
 .insurance-card {
-  min-height: 78px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  padding: 11px 10px;
+  min-width: 0;
+  min-height: 79px;
+  padding: 11px 9px;
   overflow: hidden;
   background: var(--white);
-  border: 1px solid #dbe8f4;
+  border: 1.5px solid #dce9f5;
   border-radius: 13px;
-  box-shadow: 0 1px 2px rgba(16, 34, 45, 0.025);
+  box-shadow: 0 1px 3px rgba(16, 39, 71, 0.02);
 }
 
-.insurance-wordmark {
+.insurance-name {
   display: inline-block;
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.02;
 }
 
-.insurance-wordmark small {
-  font-size: 0.67em;
+.insurance-name small {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.66em;
   font-weight: 800;
 }
 
+
+/* CareSource text treatment */
 .caresource {
-  color: #12578f;
+  color: #165991;
 }
 
-.caresource .insurance-wordmark {
-  font-family: Georgia, serif;
+.caresource .insurance-name {
+  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(18px, 2vw, 27px);
   font-style: italic;
+  letter-spacing: -0.5px;
 }
 
-.cs-heart {
+.cs-symbol {
   align-self: flex-start;
-  margin-top: 1px;
-  color: #a552b6;
-  font-size: 28px;
-  line-height: 0.8;
-  text-shadow: 3px 1px 0 #dec0e8;
+  color: #a455b5;
+  font-size: 27px;
+  line-height: 0.9;
+  text-shadow: 3px 1px 0 #dfc4e9;
 }
 
+
+/* Anthem text treatment */
 .anthem {
   color: #0758a4;
 }
 
-.anthem .insurance-wordmark {
-  font-family: Georgia, serif;
-  font-size: clamp(22px, 2.5vw, 32px);
-  font-weight: 500;
+.anthem .insurance-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(23px, 2.45vw, 33px);
+  font-weight: 400;
 }
 
 .anthem-symbol {
@@ -733,103 +874,125 @@ h2 {
   height: 27px;
   color: white;
   background: #1463ad;
-  font-size: 22px;
+  font-size: 21px;
   line-height: 1;
 }
 
+
+/* Buckeye text treatment */
 .buckeye {
   color: #4b5255;
 }
 
-.leaf-symbol {
-  color: #75ad26;
+.buckeye-symbol {
+  color: #77ad2a;
   font-size: 36px;
   line-height: 1;
   transform: rotate(-20deg);
 }
 
-.buckeye .insurance-wordmark {
-  font-family: Arial, sans-serif;
-  font-size: clamp(15px, 1.6vw, 20px);
-  letter-spacing: -1px;
+.buckeye .insurance-name {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(15px, 1.55vw, 21px);
+  letter-spacing: -0.9px;
 }
 
+
+/* Molina text treatment */
 .molina {
   color: #172a37;
 }
 
 .molina-symbol {
   display: flex;
-  gap: 2px;
   align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
 }
 
 .molina-symbol i {
   display: block;
-  width: 9px;
-  height: 23px;
+  width: 8px;
+  height: 24px;
+  background: #10a0ad;
   border-radius: 7px;
-  background: #11a0ac;
-  transform: rotate(20deg);
+  transform: rotate(15deg);
 }
 
 .molina-symbol i:nth-child(2) {
-  height: 29px;
-  background: #078ca2;
+  height: 30px;
+  background: #078ba2;
 }
 
 .molina-symbol i:nth-child(3) {
-  height: 23px;
-  background: #36b7b4;
+  height: 24px;
+  background: #38b8b2;
 }
 
-.molina .insurance-wordmark {
-  font-family: Georgia, serif;
-  font-size: clamp(15px, 1.7vw, 21px);
+.molina .insurance-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(15px, 1.55vw, 21px);
 }
 
+
+/* Ohio PASSPORT text treatment */
 .passport {
-  color: #152e64;
+  color: #142e65;
 }
 
 .passport-symbol {
   display: grid;
   place-items: center;
-  width: 37px;
-  height: 43px;
+  width: 38px;
+  height: 42px;
+  flex: 0 0 auto;
   color: var(--orange);
-  border: 2px solid #4f357c;
-  clip-path: polygon(50% 0, 100% 17%, 100% 66%, 50% 100%, 0 66%, 0 17%);
-  font-size: 24px;
+  border: 2px solid #533681;
+  font-size: 25px;
+  line-height: 1;
+  clip-path: polygon(
+    50% 0,
+    100% 17%,
+    100% 68%,
+    50% 100%,
+    0 68%,
+    0 17%
+  );
 }
 
-.passport .insurance-wordmark {
-  font-size: clamp(11px, 1.3vw, 15px);
-  line-height: 1.05;
+.passport .insurance-name {
+  font-size: clamp(11px, 1.18vw, 15px);
+  line-height: 1.08;
 }
 
-/* ---------- CONTACT FOOTER ---------- */
+
+/* 12. CONTACT FOOTER
+   ---------------------------------------------------------- */
+
 .contact-footer {
   color: var(--white);
   background:
-    radial-gradient(ellipse at 0% 100%, rgba(38, 90, 119, 0.25), transparent 40%),
-    linear-gradient(110deg, #10283b, #071b2b);
+    radial-gradient(
+      ellipse at 0% 100%,
+      rgba(40, 84, 117, 0.27),
+      transparent 43%
+    ),
+    linear-gradient(110deg, #10283d, #071b2e);
 }
 
 .contact-layout {
-  min-height: 89px;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr auto;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) auto;
   align-items: center;
   gap: 22px;
-  padding-top: 14px;
-  padding-bottom: 14px;
+  min-height: 91px;
+  padding-block: 15px;
 }
 
 .contact-title-wrap {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
 }
 
 .footer-phone-icon {
@@ -846,21 +1009,23 @@ h2 {
 .footer-phone-icon .icon {
   width: 25px;
   height: 25px;
-  fill: currentColor;
-  stroke-width: 1.4;
+  stroke-width: 1.8;
 }
 
 .contact-title-wrap h2 {
   margin: 0;
+  color: var(--white);
+  font-family: var(--font-head);
   font-size: clamp(22px, 2.1vw, 29px);
-  line-height: 1.02;
+  font-weight: 400;
+  line-height: 1.05;
 }
 
 .contact-message {
   margin: 0;
-  color: #d9e2e8;
+  color: #dce6ed;
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .contact-message strong {
@@ -870,21 +1035,22 @@ h2 {
 .contact-actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
 }
 
 .contact-actions .button {
-  min-width: 160px;
+  min-width: 158px;
 }
 
 .footer-bottom {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding-top: 8px;
-  padding-bottom: 10px;
-  color: rgba(255, 255, 255, 0.68);
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-block: 10px;
+  color: rgba(255, 255, 255, 0.72);
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
   font-size: 11px;
 }
 
@@ -893,6 +1059,7 @@ h2 {
 }
 
 .footer-bottom a {
+  color: inherit;
   text-decoration: none;
 }
 
@@ -900,8 +1067,15 @@ h2 {
   color: var(--white);
 }
 
-/* ---------- TABLET / SMALL LAPTOP ---------- */
+
+/* 13. TABLETS AND SMALL DESKTOPS
+   ---------------------------------------------------------- */
+
 @media (max-width: 1100px) {
+  :root {
+    --header-height: 62px;
+  }
+
   .container {
     width: min(calc(100% - 44px), var(--container));
   }
@@ -910,25 +1084,25 @@ h2 {
     gap: 15px;
   }
 
-  .brand-mark {
+  .brand-logo {
     width: 40px;
     height: 40px;
   }
 
-  .brand-type strong {
-    font-size: 24px;
+  .brand-text strong {
+    font-size: 25px;
   }
 
-  .brand-type small {
+  .brand-text small {
     font-size: 10px;
   }
 
   .desktop-nav {
-    gap: 13px;
+    gap: 12px;
   }
 
   .nav-link {
-    font-size: 12px;
+    font-size: 11.5px;
   }
 
   .header-call {
@@ -937,11 +1111,11 @@ h2 {
   }
 
   .hero-copy {
-    padding-left: 8px;
+    padding-left: 7px;
   }
 
   .hero h1 {
-    font-size: clamp(32px, 3.7vw, 41px);
+    font-size: clamp(34px, 3.8vw, 43px);
   }
 
   .service-grid {
@@ -957,16 +1131,25 @@ h2 {
   }
 
   .service-card p {
-    font-size: 11.1px;
+    font-size: 11px;
   }
 
   .audience-layout {
-    grid-template-columns: minmax(250px, 0.83fr) minmax(0, 1.45fr);
-    gap: 18px;
+    grid-template-columns: minmax(235px, 0.82fr) minmax(0, 1.45fr);
+    gap: 17px;
+  }
+
+  .audience-cards {
+    gap: 8px;
+  }
+
+  .audience-card img {
+    height: 90px;
   }
 
   .contact-layout {
     grid-template-columns: 1fr 1fr;
+    gap: 17px;
   }
 
   .contact-actions {
@@ -975,7 +1158,10 @@ h2 {
   }
 }
 
-/* ---------- TABLET AND MOBILE NAVIGATION ---------- */
+
+/* 14. TABLET NAVIGATION AND CARD LAYOUT
+   ---------------------------------------------------------- */
+
 @media (max-width: 900px) {
   .desktop-nav,
   .header-call {
@@ -990,39 +1176,35 @@ h2 {
     display: inline-flex;
   }
 
-  .menu-toggle[aria-expanded="true"] .menu-open-icon {
-    display: none;
-  }
-
-  .menu-toggle[aria-expanded="true"] .menu-close-icon {
-    display: block;
-  }
-
   .hero-grid {
-    min-height: auto;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 8px;
+    gap: 10px;
+    min-height: 330px;
   }
 
   .hero-copy {
-    padding: 30px 0 34px;
+    padding-block: 27px 32px;
   }
 
   .hero h1 {
-    font-size: clamp(31px, 4.5vw, 42px);
+    font-size: clamp(31px, 4.4vw, 41px);
   }
 
   .hero-visual,
   .hero-visual img {
-    min-height: 340px;
+    min-height: 330px;
+  }
+
+  .hero-description {
+    font-size: 12.5px;
   }
 
   .trust-points {
-    gap: 12px;
+    gap: 11px;
   }
 
   .trust-point {
-    font-size: 10.5px;
+    font-size: 10px;
   }
 
   .service-grid {
@@ -1031,16 +1213,16 @@ h2 {
   }
 
   .service-card {
-    min-height: 154px;
-    padding: 15px 13px;
+    min-height: 155px;
+    padding: 14px 11px;
   }
 
   .service-card h3 {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .service-card p {
-    font-size: 12.5px;
+    font-size: 12px;
   }
 
   .audience-layout {
@@ -1049,15 +1231,15 @@ h2 {
   }
 
   .audience-copy {
-    max-width: 620px;
+    max-width: 650px;
   }
 
   .audience-cards {
-    gap: 14px;
+    gap: 13px;
   }
 
   .audience-card img {
-    height: 145px;
+    height: 140px;
   }
 
   .insurance-grid {
@@ -1065,32 +1247,31 @@ h2 {
   }
 
   .insurance-card {
-    min-height: 84px;
+    min-height: 82px;
   }
 
-  .insurance-wordmark {
-    font-size: initial;
+  .caresource .insurance-name {
+    font-size: 25px;
   }
 
-  .caresource .insurance-wordmark {
-    font-size: 26px;
-  }
-
-  .anthem .insurance-wordmark {
+  .anthem .insurance-name {
     font-size: 30px;
   }
 
-  .buckeye .insurance-wordmark,
-  .molina .insurance-wordmark {
+  .buckeye .insurance-name,
+  .molina .insurance-name {
     font-size: 19px;
   }
 
-  .passport .insurance-wordmark {
+  .passport .insurance-name {
     font-size: 14px;
   }
 }
 
-/* ---------- MOBILE PHONE ---------- */
+
+/* 15. MOBILE PHONES
+   ---------------------------------------------------------- */
+
 @media (max-width: 640px) {
   body {
     font-size: 14px;
@@ -1101,31 +1282,37 @@ h2 {
   }
 
   .section-pad {
-    padding: 30px 0;
+    padding-block: 29px;
+  }
+
+  /* Compact mobile header */
+  .header-inner {
+    min-height: 64px;
   }
 
   .brand {
     gap: 6px;
   }
 
-  .brand-mark {
+  .brand-logo {
     width: 39px;
     height: 39px;
   }
 
-  .brand-type strong {
+  .brand-text strong {
     font-size: 24px;
   }
 
-  .brand-type small {
+  .brand-text small {
     font-size: 10px;
   }
 
-  /* Stack the headline above the hero picture on phones. */
+  /* Stack hero text and image without shrinking the headline. */
   .hero-grid {
     display: flex;
     flex-direction: column;
     gap: 0;
+    min-height: auto;
   }
 
   .hero-copy {
@@ -1135,21 +1322,22 @@ h2 {
 
   .hero .eyebrow {
     font-size: 11px;
-    letter-spacing: 0.95px;
+    letter-spacing: 0.9px;
   }
 
   .hero h1 {
-    max-width: 460px;
-    margin-bottom: 10px;
-    font-size: clamp(36px, 9.1vw, 47px);
+    max-width: 450px;
+    margin-bottom: 11px;
+    font-size: clamp(36px, 9vw, 47px);
     line-height: 0.99;
+    letter-spacing: -0.5px;
   }
 
   .hero-description {
     max-width: 520px;
     margin-bottom: 16px;
-    font-size: 14px;
-    line-height: 1.45;
+    font-size: 13.5px;
+    line-height: 1.5;
   }
 
   .hero-actions {
@@ -1157,45 +1345,47 @@ h2 {
   }
 
   .hero-actions .button {
-    min-height: 44px;
-    padding-inline: 15px;
-    font-size: 12.5px;
+    min-height: 43px;
+    padding-inline: 14px;
+    font-size: 12px;
   }
 
   .trust-points {
     justify-content: space-between;
-    gap: 9px;
+    gap: 8px;
     margin-top: 18px;
   }
 
   .trust-point {
-    gap: 6px;
-    font-size: 10.5px;
+    gap: 5px;
+    font-size: 10px;
   }
 
   .trust-icon .icon {
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
   }
 
+  /* Full-width caregiver image */
   .hero-visual {
     order: 2;
     min-height: 0;
     height: auto;
-    margin: 0 -17px;
+    margin-inline: -17px;
     overflow: hidden;
     border-radius: 0;
   }
 
   .hero-visual img {
-    min-height: 0;
+    width: 100%;
     height: auto;
-    aspect-ratio: 1.48 / 1;
+    min-height: 0;
+    aspect-ratio: 1.4 / 1;
     object-fit: cover;
-    object-position: 50% 40%;
+    object-position: center 40%;
   }
 
-  .hero-image-shade {
+  .hero-visual::after {
     background: linear-gradient(
       0deg,
       rgba(255, 248, 241, 0.02),
@@ -1211,144 +1401,154 @@ h2 {
 
   /* Section titles */
   .section-heading {
-    margin-bottom: 18px;
+    margin-bottom: 17px;
+  }
+
+  .section-heading .eyebrow {
+    font-size: 11px;
   }
 
   .section-heading h2 {
-    font-size: clamp(25px, 7.1vw, 31px);
-    line-height: 1.08;
+    font-size: clamp(25px, 7vw, 31px);
+    line-height: 1.1;
   }
 
   .section-heading > p:last-child {
-    font-size: 12.7px;
+    font-size: 12.5px;
   }
 
-  /* Two service cards per row on phones. */
+  /* Two service cards per row */
   .service-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
 
   .service-card {
-    min-height: 160px;
-    padding: 14px 11px 13px;
+    min-height: 158px;
+    padding: 13px 10px;
+    border-radius: 14px;
   }
 
   .service-icon {
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
     margin-bottom: 8px;
   }
 
   .service-icon .icon {
-    width: 23px;
-    height: 23px;
+    width: 22px;
+    height: 22px;
   }
 
   .service-card h3 {
-    font-size: 15px;
+    font-size: 14.5px;
   }
 
   .service-card p {
-    font-size: 11.9px;
+    font-size: 11.5px;
+    line-height: 1.38;
   }
 
-  /* Audience cards become horizontal image-and-text rows. */
+  /* Audience introduction */
   .audience-copy h2 {
     font-size: 31px;
   }
 
   .audience-copy > p:not(.eyebrow) {
-    font-size: 13.5px;
+    font-size: 13px;
   }
 
+  /* Horizontal audience cards make the photos larger on phones. */
   .audience-cards {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 11px;
   }
 
   .audience-card {
     display: grid;
-    grid-template-columns: 42% 1fr;
+    grid-template-columns: 40% minmax(0, 1fr);
+    min-height: 112px;
     text-align: left;
-    min-height: 116px;
   }
 
   .audience-card img {
     width: 100%;
     height: 100%;
-    min-height: 116px;
+    min-height: 112px;
     object-fit: cover;
   }
 
   .audience-card-text {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    padding: 12px 13px;
+    padding: 11px 12px;
   }
 
   .audience-card h3 {
-    min-height: 0;
     margin-bottom: 6px;
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .audience-card p {
-    font-size: 12px;
-    line-height: 1.35;
+    font-size: 11.7px;
+    line-height: 1.4;
   }
 
-  /* Two plan cards per row; PASSPORT gets a full row. */
+  /* Insurance cards in two columns */
   .insurance-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: 9px;
   }
 
   .insurance-card {
-    min-height: 75px;
-    padding-inline: 7px;
-    gap: 6px;
+    min-height: 72px;
+    padding: 9px 6px;
+    gap: 5px;
   }
 
   .insurance-card:last-child {
     grid-column: 1 / -1;
   }
 
-  .caresource .insurance-wordmark {
-    font-size: clamp(18px, 5.8vw, 25px);
+  .caresource .insurance-name {
+    font-size: clamp(18px, 5.6vw, 25px);
   }
 
-  .anthem .insurance-wordmark {
+  .anthem .insurance-name {
     font-size: clamp(22px, 6vw, 29px);
   }
 
-  .buckeye .insurance-wordmark,
-  .molina .insurance-wordmark {
-    font-size: 17px;
+  .buckeye .insurance-name,
+  .molina .insurance-name {
+    font-size: 16px;
   }
 
-  .passport .insurance-wordmark {
+  .passport .insurance-name {
     font-size: 14px;
   }
 
   .molina-symbol i {
-    width: 7px;
+    width: 6px;
+    height: 22px;
+  }
+
+  .molina-symbol i:nth-child(2) {
+    height: 27px;
   }
 
   .passport-symbol {
     width: 32px;
-    height: 38px;
+    height: 37px;
+    font-size: 22px;
   }
 
-  /* Full-width, stacked contact buttons on small screens. */
+  /* Stacked contact footer */
   .contact-layout {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 16px;
-    padding-top: 24px;
-    padding-bottom: 22px;
+    gap: 15px;
+    min-height: 0;
+    padding-block: 24px 21px;
   }
 
   .contact-title-wrap {
@@ -1356,8 +1556,8 @@ h2 {
   }
 
   .footer-phone-icon {
-    width: 52px;
-    height: 52px;
+    width: 51px;
+    height: 51px;
   }
 
   .contact-title-wrap h2 {
@@ -1365,7 +1565,7 @@ h2 {
   }
 
   .contact-message {
-    font-size: 12.5px;
+    font-size: 12px;
   }
 
   .contact-actions {
@@ -1376,19 +1576,87 @@ h2 {
 
   .contact-actions .button {
     width: 100%;
-    min-height: 46px;
+    min-height: 45px;
   }
 
   .footer-bottom {
     align-items: flex-start;
     flex-direction: column;
-    gap: 6px;
-    padding-top: 11px;
-    padding-bottom: 13px;
+    gap: 7px;
+    padding-block: 11px 13px;
+    font-size: 10.5px;
   }
 }
 
-/* Respect the visitor's reduced-motion accessibility setting. */
+
+/* 16. VERY SMALL PHONES
+   ---------------------------------------------------------- */
+
+@media (max-width: 360px) {
+  .container {
+    width: calc(100% - 26px);
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero-actions .button {
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+
+  .trust-points {
+    gap: 7px;
+  }
+
+  .trust-point {
+    font-size: 9px;
+  }
+
+  .service-card {
+    padding-inline: 8px;
+  }
+
+  .service-card h3 {
+    font-size: 13.5px;
+  }
+
+  .service-card p {
+    font-size: 10.8px;
+  }
+
+  .insurance-card {
+    gap: 4px;
+  }
+
+  .cs-symbol {
+    font-size: 21px;
+  }
+
+  .anthem-symbol {
+    width: 19px;
+    height: 23px;
+    font-size: 18px;
+  }
+
+  .buckeye-symbol {
+    font-size: 27px;
+  }
+
+  .molina-symbol {
+    gap: 1px;
+  }
+
+  .molina-symbol i {
+    width: 5px;
+  }
+}
+
+
+/* 17. ACCESSIBILITY: REDUCED MOTION
+   ---------------------------------------------------------- */
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1397,8 +1665,8 @@ h2 {
   *,
   *::before,
   *::after {
-    transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
